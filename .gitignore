@@ -1,0 +1,4 @@
+# dependencies
+/node_modules
+/warbler-client/node_modules
+/warbler-server/node_modules
