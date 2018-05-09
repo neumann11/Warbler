@@ -1,8 +1,10 @@
+require("dotenv").config(); //require all env variables;
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const errorHandler = require("./handlers/error");
+const authRoutes = require("./routes/auth");
 
 const PORT = 3000;
 
@@ -10,6 +12,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // all routes:
+app.use("/api/auth", authRoutes);
 
 // Error handling if non of the routes is reached:
 app.use(function(req, res, next){

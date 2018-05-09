@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
 //Add pre-save hooks->hash passw. before user saved to db:
 userSchema.pre("save", async function(next){ //run func. before sav e
 	try{
-		if(!this.isModified("password"){
+		if(!this.isModified("password")){
 			return next();
 		}
 		//async action:

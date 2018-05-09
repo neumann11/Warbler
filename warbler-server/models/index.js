@@ -8,4 +8,4 @@ mongoose.connect("mongodb://localhost/warbler", { //connect to mongodb
 	useMongoClient: true
 });
 
-
+module.exports.User = require("./user");
