@@ -6,7 +6,7 @@ const bodyParser = require("body-parser"); //allows to get data from the form vi
 const errorHandler = require("./handlers/error");//generic middleware that returns formatted error object
 const authRoutes = require("./routes/auth");
 const messagesRoutes = require("./routes/messages");
-
+const { loginRequired, ensureCorrectUser } = require("./middleware/auth");
 const PORT = 3000;
 
 app.use(cors());
@@ -14,7 +14,12 @@ app.use(bodyParser.json());
 
 // all routes:
 app.use("/api/auth", authRoutes); 
-app.use("/api/users/:id/messages", messagesRoutes); 
+app.use(
+	"/api/users/:id/messages", 
+	loginRequired, 
+	ensureCorrectUser, 
+	messagesRoutes
+);
 
 // Error handling if non of the routes is reached:
 app.use(function(req, res, next){
