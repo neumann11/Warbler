@@ -7,20 +7,21 @@ const errorHandler = require("./handlers/error");//generic middleware that retur
 const authRoutes = require("./routes/auth");
 const messagesRoutes = require("./routes/messages");
 const { loginRequired, ensureCorrectUser } = require("./middleware/auth");
-const PORT = 3000;
+const PORT = 3001;
 
 app.use(cors());
 app.use(bodyParser.json());
 
 // all routes:
-app.use("/api/auth", authRoutes); 
+app.use("/api/auth", authRoutes);
 app.use(
-	"/api/users/:id/messages", 
-	loginRequired, 
-	ensureCorrectUser, 
+	"/api/users/:id/messages",
+	loginRequired,
+	ensureCorrectUser,
 	messagesRoutes
 );
 
+//display messages from all users if user is loggedin:
 app.get("/api/messages", loginRequired, async function(req, res, next){
 	try {
 		let message = await db.Message.find()
