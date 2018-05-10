@@ -21,6 +21,20 @@ app.use(
 	messagesRoutes
 );
 
+app.get("/api/messages", loginRequired, async function(req, res, next){
+	try {
+		let message = await db.Message.find()
+		.sort({createdAt: "desc"})
+		.populate("user", {  //get each indiv. username/img to display with messag on timeline;
+			username: true,
+			profileImageUrl: true
+		});
+		return res.status(200).json(messages);
+	} catch (err) {
+		return next(err);
+	}
+});
+
 // Error handling if non of the routes is reached:
 app.use(function(req, res, next){
 	let err = new Error("Not Found") //Error is a built-in const func. in JS
