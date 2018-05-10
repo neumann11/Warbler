@@ -1,4 +1,4 @@
-import { ADD_ERROR, REMOVE_ERROR } from "../actionTypes/";
+import { ADD_ERROR, REMOVE_ERROR } from "../actionTypes";
 
 //Error Reducer:
 export default (state = { message: null }, action) => {

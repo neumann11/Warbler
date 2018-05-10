@@ -10,7 +10,7 @@ const DEFAULT_STATE = {
 //use this info t check if authenticated;
 export default (state = DEFAULT_STATE, action) => {
   switch(action.type){
-    case SET_CURRENT_USER;
+    case SET_CURRENT_USER:
     return {
       isAuthenticated: !!Object.keys(action.user).length, //are there keys or no keys in this object?
       user: action.user
