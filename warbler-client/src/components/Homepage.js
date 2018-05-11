@@ -3,14 +3,23 @@ import { Link } from "react-router-dom";
 
 //display Messages list or Landing page (if user not signedin)
 
-const Homepage = () => (
-  <div className="home-hero">
-    <h1>What's Happening?</h1>
-    <h4>New to Warbler?</h4>
-    <Link to="/signup" className="btn btn-primary">
-      Sign up here
-    </Link>
-  </div>
-);
+const Homepage = ({ currentUser }) => {
+  if (!currentUser.isAuthenticated) {
+    return (
+      <div className="home-hero">
+        <h1>What's Happening?</h1>
+        <h4>New to Warbler?</h4>
+        <Link to="/signup" className="btn btn-primary">
+          Sign up here
+        </Link>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <h1>YOU MADE IT!</h1>
+    </div>
+  )
+};
 
 export default Homepage;

@@ -9,7 +9,17 @@ export function setCurrentUser(user){
   };
 }
 
+// login = delete token from LocalStorage;
+//Turn currentUser into empty obj;
+export function logout(){
+  return dispatch => { //use Thunk
+    localStorage.clear();
+    dispatch(setCurrentUser({}));
+  };
+}
+
 //func to login or signup:
+// login = place token into LocalStorage
 
 export function authUser(type, userData){
   return dispatch => { //wait for api call to finish before dispatch;

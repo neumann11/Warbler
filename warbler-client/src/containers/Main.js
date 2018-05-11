@@ -9,11 +9,11 @@ import { removeError } from "../store/actions/errors";
 //Routing logic
 
 const Main = props => {
-  const { authUser, errors, removeError } = props;
+  const { authUser, errors, removeError, currentUser } = props;
   return(
     <div className="container">
       <Switch> //allows multip. routes
-        <Route exact path="/" render={props => <Homepage {...props} /> } /> //render func that renders Homepage comp;
+        <Route exact path="/" render={props => <Homepage currentUser={currentUser} {...props} /> } /> //render func that renders Homepage comp;
         <Route
           exact
           path="/signup"
