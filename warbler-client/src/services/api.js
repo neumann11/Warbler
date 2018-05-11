@@ -2,9 +2,9 @@ import axios from "axios";
 
 export function setTokenHeader(token) {
   if (token) {
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`; //att. token to all future requests
   } else {
-    delete axios.defaults.headers.common["Authorization"];
+    delete axios.defaults.headers.common["Authorization"]; //if user logges out
   }
 }
 
