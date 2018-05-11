@@ -3,22 +3,29 @@ import { Switch, Route, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Homepage from "../components/Homepage";
 import AuthForm from "../components/AuthForm";
+import { authUser } from "../store/actions/auth"; //pass down as prop to AuthForm
+import { removeError } from "../store/actions/errors";
 
 //Routing logic
 
 const Main = props => {
+  const { authUser, errors, removeError } = props;
   return(
     <div className="container">
       <Switch> //allows multip. routes
         <Route exact path="/" render={props => <Homepage {...props} /> } /> //render func that renders Homepage comp;
         <Route
           exact
-          path="/signin"
+          path="/signup"
           render={props => {
             return (
               <AuthForm
-                buttonText="Log in"
-                heading="Welcome Back."
+                removeError={removeError}
+                errors={errors}
+                onAuth={authUser}
+                signUp
+                buttonText="Sign me up!"
+                heading="Join Warbler today."
                 {...props}
               />
             );
@@ -26,12 +33,15 @@ const Main = props => {
         />
         <Route
           exact
-          path="/signup"
+          path="/signin"
           render={props => {
             return (
               <AuthForm
-                buttonText="Sign me up!"
-                heading="Join Warbler today."
+                removeError={removeError}
+                errors={errors}
+                onAuth={authUser}
+                buttonText="Log in"
+                heading="Welcome Back."
                 {...props}
               />
             );
@@ -44,8 +54,11 @@ const Main = props => {
 
 function mapStateToProps(state){ //connects component to Redux store;
   return {
-    currentUser: state.currentUser //for Homepage to either disp landingOage or the timeline of Messages
+    currentUser: state.currentUser, //for Homepage to either disp landingOage or the timeline of Messages
+    errors: state.errors
   };
 }
 
-export default withRouter(connect(mapStateToProps, null)(Main)); //allows to get props from Router to Component
+export default withRouter( //allows to get props from Router to Component
+  connect(mapStateToProps, { authUser, removeError })(Main)
+);
