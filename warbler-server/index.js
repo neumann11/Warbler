@@ -7,6 +7,7 @@ const errorHandler = require("./handlers/error");//generic middleware that retur
 const authRoutes = require("./routes/auth");
 const messagesRoutes = require("./routes/messages");
 const { loginRequired, ensureCorrectUser } = require("./middleware/auth");
+const db = require("./models");
 const PORT = 3001;
 
 app.use(cors());
@@ -22,9 +23,9 @@ app.use(
 );
 
 //display messages from all users if user is loggedin:
-app.get("/api/messages", loginRequired, async function(req, res, next){
+app.get("/api/messages", loginRequired, async function(req, res, next) {
 	try {
-		let message = await db.Message.find()
+		let messages = await db.Message.find()
 		.sort({createdAt: "desc"})
 		.populate("user", {  //get each indiv. username/img to display with messag on timeline;
 			username: true,

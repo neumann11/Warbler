@@ -13,14 +13,14 @@ export function setTokenHeader(token) {
 // @param {string} - path the route path / endpoint;
 // @param {string} - data (optional) data in JSON form for POST requests;
 
-//generic function
-export function apiCall(method, path, data){
+export function apiCall(method, path, data) {
   return new Promise((resolve, reject) => {
-    return axios[method](path, data)
+    return axios[method.toLowerCase()](path, data)
       .then(res => {
-        return resolve(res.data) //resp from Axios is an obj called Response, w. Subobject Data and then subobject Error (if not successful)
-      }).catch(err => {
+        return resolve(res.data); //resp from Axios is an obj called Response, w. Subobject Data and then subobject Error (if not successful)
+      })
+      .catch(err => {
         return reject(err.response.data.error); //err is sent by our server from errorHandler
       });
-    });
+  });
 }

@@ -5,15 +5,24 @@ import Homepage from "../components/Homepage";
 import AuthForm from "../components/AuthForm";
 import { authUser } from "../store/actions/auth"; //pass down as prop to AuthForm
 import { removeError } from "../store/actions/errors";
+import withAuth from "../hocs/withAuth";
+import MessageForm from "../containers/MessageForm";
 
 //Routing logic
 
 const Main = props => {
   const { authUser, errors, removeError, currentUser } = props;
-  return(
+  return (
     <div className="container">
-      <Switch> //allows multip. routes
-        <Route exact path="/" render={props => <Homepage currentUser={currentUser} {...props} /> } /> //render func that renders Homepage comp;
+      <Switch>
+        {" "}
+        //allows multip. routes
+        <Route
+          exact
+          path="/"
+          render={props => <Homepage currentUser={currentUser} {...props} />}
+        />{" "}
+        //render func that renders Homepage comp;
         <Route
           exact
           path="/signup"
@@ -47,18 +56,24 @@ const Main = props => {
             );
           }}
         />
+        <Route
+          path="/users/:id/messages/new"
+          component={withAuth(MessageForm)} //hocs
+        />
       </Switch>
     </div>
   );
 };
 
-function mapStateToProps(state){ //connects component to Redux store;
+function mapStateToProps(state) {
+  //connects component to Redux store;
   return {
     currentUser: state.currentUser, //for Homepage to either disp landingOage or the timeline of Messages
     errors: state.errors
   };
 }
 
-export default withRouter( //allows to get props from Router to Component
+export default withRouter(
+  //allows to get props from Router to Component
   connect(mapStateToProps, { authUser, removeError })(Main)
 );
